@@ -34,5 +34,24 @@ head(beetles4) #gives you the first 6 rows of data by default and you can use ta
 head(beetles4, n = 1) #you can specify how many rows you want like this 
 View(beetles4) #just takes you to the table tab 
 
+#4
+beetlesdf <- read.table('dung_beetles_read_1.csv', sep = ',',header = T)
+
+beetles2df <- read.table('dung_beetles_read_2.txt',sep = '\t',header = T)
+#not sure why we use '\t' but maybe due to the fact that it is a txt file instead of csv
+beetles3df <- read.table('dung_beetles_read_3.txt',sep = '\t',header = T, skip = 1)
+#we used skip here as there was an extra row on the first line that we did not want to read in 
+
+#FILL
+install.packages('tidyr')
+library(tidyr)
+?fill
+beetlesdf <- fill(beetlesdf,Site) #you don't need the direction in this dataset
+
+beetlesdf4 <- read.table('dung_beetles_read_4.txt', sep = '\t', header = T, na.strings = '-')
+#sites was previously filled with '-' instead of N/A because R thinks that it is part of the data and we use na.strings to tell R that '-' means there is no data there 
+beetlesdf4 <- fill(beetlesdf4,Site)
+
+
 
 
