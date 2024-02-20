@@ -27,4 +27,12 @@ unique <- unique(beetles4$spp)
 length(unique)
 #by replacing $ with each column name, we can see how beetles4 is the table that lets you count all the unique values of each column
 
+#3
+str(beetles4) #gives you the number of observations and variables 
+summary(beetles4) #gives you the interquartile ranges, the type of data/mode and the length 
+head(beetles4) #gives you the first 6 rows of data by default and you can use tail for the opposite
+head(beetles4, n = 1) #you can specify how many rows you want like this 
+View(beetles4) #just takes you to the table tab 
+
+
 
