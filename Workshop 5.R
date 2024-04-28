@@ -52,6 +52,41 @@ beetlesdf4 <- read.table('dung_beetles_read_4.txt', sep = '\t', header = T, na.s
 #sites was previously filled with '-' instead of N/A because R thinks that it is part of the data and we use na.strings to tell R that '-' means there is no data there 
 beetlesdf4 <- fill(beetlesdf4,Site)
 
+#5 - Piping
+beetlesdf <- read.table("dung_beetles_read_1.csv", sep=",",header=T) %>% fill(Site)
+#'%>%' takes the output of one function and puts it straight into the next one 
 
+#6 - Pivoting
+?pivot_longer
+#pivot_longer lenghthens the data by adding more rows and reducing columns 
 
+pivot_longer(data=beetlesdf, cols = c("Caccobius_bawangensis", "Catharsius_dayacus", "Catharsius_renaudpauliani", "Copis_agnus", "Copis_ramosiceps", "Copis_sinicus", "Microcopis_doriae", "Microcopis_hidakai"),names_to="Spp")
+# instead of the species sitting in one row, they are now within the same column and multiple rows 
+beetlesdf <- pivot_longer(data=beetlesdf, cols = starts_with('C'))
+beetlesdf <- pivot_longer(data=beetlesdf, cols = contains('_'), names_to = 'Spp') 
+#this is a simpler and less messy code
+# we have used a selection helper
+index <- beetlesdf[1,2]
+index
+#selecting columns using their numerical index 
+?pivot_longer
+# struggling with changing value to count
+
+casesdf <- read.table('WMR2022_reported_cases_1.txt', sep = '\t', header = T, na.strings = '') %>% fill(country)
+
+casesdf <- pivot_wider(casesdf, names_from = 'method', values_from = 'n')
+# this makes the 'method' variables into columns and puts the values of 'n' into these columns 
+
+#7
+bigdf <- read.table("WMR2022_reported_cases_2.txt",sep="\t", header = T, na.strings='') %>% fill(country)
+#corrected the code for reading in and filled in the countries 
+
+bigdf <- pivot_longer(bigdf, cols= starts_with('X'), names_to = 'years')
+
+bigdf <- pivot_wider(bigdf, names_from = 'method', values_from = 'value')
+#these were done separately 
+
+#can you use the pipe function to achieve the same output?
+bigdf <- pivot_wider(data = bigdf, cols = starts_with('X'), names_to = 'years') %>% pivot_wider(data = bigdf, names_from = 'method', values_from = starts_with('X'), id_cols = )
+  
 
